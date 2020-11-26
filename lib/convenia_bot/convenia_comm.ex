@@ -28,7 +28,7 @@ defmodule CB.ConveniaBot.ConveniaComm do
 
       {:ok, %HTTPoison.Response{status_code: 429, body: _body}} ->
         Logger.info("Fetch Info: returned 429")
-        cooldown = 10000 * round(:math.pow(2, retries))
+        cooldown = 10000 * round(:math.pow(2, retries + 1))
         Logger.debug("Too many attempts: cooling down for #{cooldown}.")
         :timer.sleep(cooldown)
         fetch_employee_info(id, opts, retries + 1)
@@ -62,6 +62,12 @@ defmodule CB.ConveniaBot.ConveniaComm do
         Logger.debug("Fetch Info: returned 200")
         Jason.decode(body)
 
+      {:ok, %HTTPoison.Response{status_code: 429, body: _body}} ->
+          Logger.info("Fetch Info: returned 429")
+          :timer.sleep(60000)
+          fetch_employees()
+
+
       {:error, %HTTPoison.Error{reason: reason} = resp} ->
         Logger.warn(reason)
         {:error, resp}
@@ -72,8 +78,8 @@ defmodule CB.ConveniaBot.ConveniaComm do
     case fetch_employees() do
       {:ok, employees} ->
         employees["data"]
-
       |> Enum.take(10)
+
       {_, err} ->
         Logger.debug(err)
         []

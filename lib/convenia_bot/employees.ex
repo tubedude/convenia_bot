@@ -150,26 +150,15 @@ defmodule CB.ConveniaBot.Employees do
     |> Enum.map(fn {id, _e, _s} -> spawn(__MODULE__, :async_enrich_employee, [id]) end)
   end
 
-  defp parse_birthday(date_string) do
-    parse_date(date_string)
-    |> (fn d -> Date.new!(today().year, d.month, d.day) end).()
-  end
-
-  defp enrich_list(state) do
-    state
-    |> Enum.map(fn e -> spawn(__MODULE__, :async_enrich_employee, [e]) end)
-  end
-
   def async_enrich_employee(e) do
     case CB.ConveniaBot.ConveniaComm.fetch_employee_info(e, timeout: :infinity) do
-      {:ok, {id, employee}} ->
+      {:ok, employee} ->
         GenServer.cast(
           __MODULE__,
-          { :got_employee, { id, employee, bot_status: :updated } }
+          { :got_employee, { employee["id"], employee, bot_status: :updated } }
         )
-
-      _ ->
-        GenServer.cast(__MODULE__, {:did_not_update, id})
+      {:error, _} ->
+        GenServer.cast(__MODULE__, {:did_not_update, e})
     end
   end
 

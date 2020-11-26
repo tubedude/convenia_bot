@@ -19,6 +19,7 @@ defmodule CB.ConveniaBot.ConveniaMsgs.Helper do
  - #{address["zipcode"]} - #{address["city"]}, #{address["state"]}"
   end
 
+  def format_phone(nil), do: ""
   def format_phone(phone_string), do: format_phone(phone_string, "(##) #####-####")
 
   def format_phone(phone_string, pattern) do
