@@ -1,6 +1,6 @@
-defmodule CB.ConveniaBot.ConveniaMsgs.Helper do
+defmodule CB.ConveniaMsgs.Helper do
   require Logger
-  alias CB.ConveniaBot.Employees
+  alias CB.Employees
 
   def proper_name(employee) do
     "#{capitalize(employee["name"])} #{capitalize(employee["last_name"])}"

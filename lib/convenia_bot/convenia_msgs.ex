@@ -1,7 +1,7 @@
-defmodule CB.ConveniaBot.ConveniaMsgs do
-  use CB.ConveniaBot.ConveniaMsgs.Admission
-  use CB.ConveniaBot.ConveniaMsgs.Dismissal
-  use CB.ConveniaBot.ConveniaMsgs.Vacations
-  use CB.ConveniaBot.ConveniaMsgs.BirthdayReminder
-  use CB.ConveniaBot.ConveniaMsgs.StartReminder
+defmodule CB.ConveniaMsgs do
+  use CB.ConveniaMsgs.Admission
+  use CB.ConveniaMsgs.Dismissal
+  use CB.ConveniaMsgs.Vacations
+  use CB.ConveniaMsgs.BirthdayReminder
+  use CB.ConveniaMsgs.StartReminder
 end

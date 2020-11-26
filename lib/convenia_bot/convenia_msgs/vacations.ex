@@ -1,7 +1,7 @@
-defmodule CB.ConveniaBot.ConveniaMsgs.Vacations do
+defmodule CB.ConveniaMsgs.Vacations do
   require Logger
 
-  alias CB.ConveniaBot.ConveniaMsgs.Helper
+  alias CB.ConveniaMsgs.Helper
 
   defmacro __using__(_opts) do
     quote do

@@ -10,8 +10,8 @@ defmodule CB.Application do
     children = [
       # Start the endpoint when the application starts
       CBWeb.Endpoint,
-      CB.ConveniaBot.Scheduler,
-      CB.ConveniaBot.Employees
+      CB.Scheduler,
+      CB.Employees
       # Starts a worker by calling: CB.Worker.start_link(arg)
       # {CB.Worker, arg},
     ]
@@ -30,7 +30,7 @@ defmodule CB.Application do
   end
 end
 
-# alias CB.ConveniaBot.Employees
+# alias CB.Employees
 # id = "69e955cb-e831-4f5f-8a4d-0027e7c457c0"
 # old = Employees.list()
 # Enum.count(old)

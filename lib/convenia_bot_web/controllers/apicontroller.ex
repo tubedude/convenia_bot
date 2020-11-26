@@ -11,7 +11,7 @@ defmodule CBWeb.ApiController do
 
   def force_admissions_check(conn, _params) do
     Logger.info("Forcing addmissions check")
-    json(conn, CB.ConveniaBot.Employees.check_admissions())
+    json(conn, CB.Employees.check_admissions())
   end
 
   def incoming(conn, params) do
@@ -23,7 +23,7 @@ defmodule CBWeb.ApiController do
         "secret_pass" => @secret_pass()
       } = data ->
         conn
-        |> json(CB.ConveniaBot.ExternalComm.post(data))
+        |> json(CB.ExternalComm.post(data))
 
       _error ->
         conn

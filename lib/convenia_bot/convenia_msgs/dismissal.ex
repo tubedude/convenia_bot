@@ -1,5 +1,5 @@
-defmodule CB.ConveniaBot.ConveniaMsgs.Dismissal do
-  alias CB.ConveniaBot.ConveniaMsgs.Helper
+defmodule CB.ConveniaMsgs.Dismissal do
+  alias CB.ConveniaMsgs.Helper
 
   require Logger
 

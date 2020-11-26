@@ -1,5 +1,5 @@
-defmodule CB.ConveniaBot.ConveniaMsgs.StartReminder do
-  alias CB.ConveniaBot.ConveniaMsgs.Helper
+defmodule CB.ConveniaMsgs.StartReminder do
+  alias CB.ConveniaMsgs.Helper
 
   require Logger
 

@@ -1,5 +1,5 @@
-defmodule CB.ConveniaBot.ConveniaMsgs.Admission do
-  alias CB.ConveniaBot.ConveniaMsgs.Helper
+defmodule CB.ConveniaMsgs.Admission do
+  alias CB.ConveniaMsgs.Helper
 
   require Logger
 

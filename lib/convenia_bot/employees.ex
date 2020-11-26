@@ -1,9 +1,9 @@
-defmodule CB.ConveniaBot.Employees do
+defmodule CB.Employees do
   use GenServer
 
   require Logger
 
-  alias CB.ConveniaBot.ConveniaComm
+  alias CB.ConveniaComm
 
   # Client
   def start_link(default) when is_list(default) do
@@ -62,7 +62,7 @@ defmodule CB.ConveniaBot.Employees do
 
       nivers ->
         data = %{"employees" => just(nivers), "type" => "birthday.reminder"}
-        {:reply, CB.ConveniaBot.ExternalComm.post(data), state}
+        {:reply, CB.ExternalComm.post(data), state}
     end
   end
 
@@ -77,7 +77,7 @@ defmodule CB.ConveniaBot.Employees do
       employees ->
         Logger.info("Next admissions found: #{Enum.count(employees)}")
         data = %{"employees" => just(employees), "type" => "admissions.reminder"}
-        {:reply, CB.ConveniaBot.ExternalComm.post(data), state}
+        {:reply, CB.ExternalComm.post(data), state}
     end
   end
 
@@ -153,7 +153,7 @@ defmodule CB.ConveniaBot.Employees do
   end
 
   def async_enrich_employee(e) do
-    case CB.ConveniaBot.ConveniaComm.fetch_employee_info(e, timeout: :infinity) do
+    case CB.ConveniaComm.fetch_employee_info(e, timeout: :infinity) do
       {:ok, employee} ->
         GenServer.cast(
           __MODULE__,

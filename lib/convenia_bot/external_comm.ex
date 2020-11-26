@@ -1,11 +1,11 @@
-defmodule CB.ConveniaBot.ExternalComm do
+defmodule CB.ExternalComm do
   require Logger
 
   def info(), do: {:ok, %{name: "Slack"}}
 
   def post(data) do
     Logger.info("Posting to Slack...")
-    {payload, channel} = CB.ConveniaBot.process(data)
+    {payload, channel} = CB.process(data)
 
     case HTTPoison.post(channel, Jason.encode!(payload)) do
       {:ok, %{status_code: 200}} ->

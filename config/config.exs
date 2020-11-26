@@ -30,20 +30,20 @@ config :phoenix, :json_library, Jason
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
-config :convenia_bot, CB.ConveniaBot.Scheduler,
+config :convenia_bot, CB.Scheduler,
   timezone: "America/Sao_Paulo",
   jobs: [
     reset: [
       schedule: "0 23 * * *",
-      task: {CB.ConveniaBot.Employees, :reset, []}
+      task: {CB.Employees, :reset, []}
     ],
     check_for_bday: [
       schedule: "@daily",
-      task: {CB.ConveniaBot.Employees, :check_for_bday, []}
+      task: {CB.Employees, :check_for_bday, []}
     ],
     check_admissions: [
       schedule: "0 6 * * 1-5",
-      task: {CB.ConveniaBot.Employees, :check_admissions, []}
+      task: {CB.Employees, :check_admissions, []}
     ]
   ]
 

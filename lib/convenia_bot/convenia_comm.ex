@@ -1,4 +1,4 @@
-defmodule CB.ConveniaBot.ConveniaComm do
+defmodule CB.ConveniaComm do
   require Logger
 
   @convenia_base_url "https://public-api.convenia.com.br/api/v3/"
