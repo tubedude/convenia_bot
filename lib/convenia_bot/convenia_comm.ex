@@ -78,11 +78,20 @@ defmodule CB.ConveniaBot.ConveniaComm do
     case fetch_employees() do
       {:ok, employees} ->
         employees["data"]
-      |> Enum.take(10)
+        |>take_if_dev()
 
       {_, err} ->
         Logger.debug(err)
         []
+    end
+  end
+
+  defp take_if_dev(data) do
+    if unquote(Mix.env == :dev) do
+      data
+      |> Enum.take(10)
+    else
+      data
     end
   end
 end
