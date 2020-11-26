@@ -49,4 +49,62 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-import_config "prod.secret.exs"
+
+secret_key_base =
+    System.get_env("SECRET_KEY_BASE") ||
+      raise """
+      environment variable SECRET_KEY_BASE is missing.
+      You can generate one by calling: mix phx.gen.secret
+      """
+
+  config :convenia_bot, CBWeb.Endpoint,
+    http: [
+      port: String.to_integer(System.get_env("PORT") || "4000"),
+      transport_options: [socket_opts: [:inet6]]
+    ],
+    secret_key_base: secret_key_base
+
+  # ## Using releases (Elixir v1.9+)
+  #
+  # If you are doing OTP releases, you need to instruct Phoenix
+  # to start each relevant endpoint:
+  #
+  #     config :convenia_bot, CBWeb.Endpoint, server: true
+  #
+  # Then you can assemble a release by calling `mix release`.
+  # See `mix help release` for more information.
+
+  config :convenia_bot,
+         :slack_url,
+         System.get_env("SLACK_URL") ||
+           raise("""
+           environment variable SLACK_URL is missing.
+           """)
+
+  config :convenia_bot,
+         :infra_interna_slack_url,
+         System.get_env("INFRA_INTERNA_SLACK_URL") ||
+           raise("""
+           environment variable INFRA_INTERNA_SLACK_URL is missing.
+           """)
+
+  config :convenia_bot,
+         :convenia_token,
+         System.get_env("CONVENIA_TOKEN") ||
+           raise("""
+           environment variable CONVENIA_TOKEN is missing.
+           """)
+
+  config :convenia_bot,
+         :secret_user,
+         System.get_env("SECRET_USER") ||
+           raise("""
+           environment variable SECRET_USER is missing.
+           """)
+
+  config :convenia_bot,
+         :secret_pass,
+         System.get_env("SECRET_PASS") ||
+           raise("""
+           environment variable SECRET_PASS is missing.
+           """)
