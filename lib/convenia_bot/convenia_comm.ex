@@ -15,10 +15,11 @@ defmodule CB.ConveniaBot.ConveniaComm do
     case HTTPoison.get(url, [{:token, convenia_token()}], opts) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Logger.debug("Fetch Info: returned 200")
+
         case Jason.decode(body) do
           {:ok, json} ->
             [data | _t] = json["data"]
-            {:ok, data }
+            {:ok, data}
 
           {:error, e} ->
             # "Error decoding Response"
@@ -63,10 +64,9 @@ defmodule CB.ConveniaBot.ConveniaComm do
         Jason.decode(body)
 
       {:ok, %HTTPoison.Response{status_code: 429, body: _body}} ->
-          Logger.info("Fetch Info: returned 429")
-          :timer.sleep(60000)
-          fetch_employees()
-
+        Logger.info("Fetch Info: returned 429")
+        :timer.sleep(60000)
+        fetch_employees()
 
       {:error, %HTTPoison.Error{reason: reason} = resp} ->
         Logger.warn(reason)
@@ -78,7 +78,7 @@ defmodule CB.ConveniaBot.ConveniaComm do
     case fetch_employees() do
       {:ok, employees} ->
         employees["data"]
-        |>take_if_dev()
+        |> take_if_dev()
 
       {_, err} ->
         Logger.debug(err)
@@ -87,7 +87,7 @@ defmodule CB.ConveniaBot.ConveniaComm do
   end
 
   defp take_if_dev(data) do
-    if unquote(Mix.env == :dev) do
+    if unquote(Mix.env() == :dev) do
       data
       |> Enum.take(10)
     else

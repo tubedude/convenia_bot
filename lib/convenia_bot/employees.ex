@@ -34,17 +34,14 @@ defmodule CB.ConveniaBot.Employees do
     GenServer.call(__MODULE__, :updated?)
   end
 
-  def updated() do
-    GenServer.call(__MODULE__, :updated?)
-  end
-
   # Callbacks
 
   @impl true
   @spec init(any()) :: {:ok, [any()]}
   def init(_args) do
-    state = fetch_list()
-    |> Enum.map(fn(resp) -> { resp["id"], resp, [bot_status: :raw] } end )
+    state =
+      fetch_list()
+      |> Enum.map(fn resp -> {resp["id"], resp, [bot_status: :raw]} end)
 
     enrich_list(state)
 
@@ -85,7 +82,11 @@ defmodule CB.ConveniaBot.Employees do
   end
 
   def handle_call({:find, search_id}, _from, state) do
-    {_id, employee, _status} = Enum.find(state, fn {id, _employee, _status} -> id == search_id end) || fetch_employee(search_id)
+    {_id, employee, _status} =
+      state
+      |> Enum.find(fn {id, _employee, _status} -> id == search_id end) ||
+        fetch_employee(search_id)
+
     {:reply, employee, state}
   end
 
@@ -99,16 +100,17 @@ defmodule CB.ConveniaBot.Employees do
   end
 
   @impl true
-  def handle_cast({:got_employee, {id, employee, status} }, state) do
-    new_state = state
-    |> Enum.map(fn({existing_id, _e, existing_status} = existing_data) ->
-    case existing_id == id do
-      true -> { id, employee, Keyword.merge(existing_status,status) }
-      false -> existing_data
-    end
-    end)
-    # {:noreply, List.keyreplace(state, id, 0, {id, employee, status } ) }
-    { :noreply, new_state }
+  def handle_cast({:got_employee, {id, employee, status}}, state) do
+    new_state =
+      state
+      |> Enum.map(fn {existing_id, _e, existing_status} = existing_data ->
+        case existing_id == id do
+          true -> {id, employee, Keyword.merge(existing_status, status)}
+          false -> existing_data
+        end
+      end)
+
+    {:noreply, new_state}
   end
 
   def handle_cast({:did_not_update, id}, state) do
@@ -117,16 +119,16 @@ defmodule CB.ConveniaBot.Employees do
   end
 
   def handle_cast(:reset, _state) do
-    {:ok, state } = init([])
+    {:ok, state} = init([])
     {:noreply, state}
   end
 
   # Helpers
 
-  defp birthday?({_id, employee,  _status}),
+  defp birthday?({_id, employee, _status}),
     do: Date.diff(today(), parse_birthday(employee["birth_date"])) == 0
 
-  defp admission_is_near?({_id, employee,  _status}),
+  defp admission_is_near?({_id, employee, _status}),
     do: Date.diff(today(), parse_date(employee["hiring_date"])) < 0
 
   defp today(), do: DateTime.to_date(DateTime.now!("America/Sao_Paulo"))
@@ -155,14 +157,15 @@ defmodule CB.ConveniaBot.Employees do
       {:ok, employee} ->
         GenServer.cast(
           __MODULE__,
-          { :got_employee, { employee["id"], employee, bot_status: :updated } }
+          {:got_employee, {employee["id"], employee, bot_status: :updated}}
         )
+
       {:error, _} ->
         GenServer.cast(__MODULE__, {:did_not_update, e})
     end
   end
 
   defp just(employees) do
-    Enum.map(employees, fn({_id, e, _s}) -> e end )
+    Enum.map(employees, fn {_id, e, _s} -> e end)
   end
 end

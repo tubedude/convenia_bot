@@ -14,13 +14,6 @@ defmodule CBWeb.ApiController do
     json(conn, CB.ConveniaBot.Employees.check_admissions())
   end
 
-  def check(conn, _param), do: json(conn, %{ok: @version})
-
-  def force_admissions_check(conn, _params) do
-    Logger.info("Forcing addmissions check")
-    json(conn, CB.ConveniaBot.Employees.check_admissions())
-  end
-
   def incoming(conn, params) do
     Logger.info(inspect(params))
 
@@ -42,5 +35,4 @@ defmodule CBWeb.ApiController do
   def toggle_employee(conn, _params) do
     conn
   end
-
 end

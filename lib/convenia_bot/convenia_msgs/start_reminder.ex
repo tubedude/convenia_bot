@@ -47,9 +47,9 @@ defmodule CB.ConveniaBot.ConveniaMsgs.StartReminder do
   defp format_start(employee) do
     {
       employee["hiring_date"],
-      "*#{Helper.proper_name(employee)}*\n#{employee["job"]["name"]} - #{employee["cost_center"]["name"]} - #{
-        Helper.supervisor(employee)
-      }\n
+      "*#{Helper.proper_name(employee)}*\n#{employee["job"]["name"]} - #{
+        employee["cost_center"]["name"]
+      } - #{Helper.supervisor(employee)}\n
 Cel: `#{Helper.format_phone(employee["cellphone"])}` Email: `#{
         employee["email"] || employee["alternative_email"]
       }`\n

@@ -14,10 +14,6 @@ defmodule CBWeb.Router do
   scope "/api", CBWeb do
     pipe_through :api
 
-    # get "/force_admissions_check", ApiController, :force_admissions_check
-
-    # get "/force_admissions_check", ApiController, :force_admissions_check
-
     post "/:secret_user/:secret_pass", ApiController, :incoming
   end
 end

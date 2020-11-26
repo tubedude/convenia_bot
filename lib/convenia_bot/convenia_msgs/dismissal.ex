@@ -19,6 +19,7 @@ defmodule CB.ConveniaBot.ConveniaMsgs.Dismissal do
 
   defp sort(%{"type" => "dismissal." <> _action} = data) do
     Logger.info(data["type"])
+
     {
       :dismissal,
       Map.put(data, :employee, data["employee"])

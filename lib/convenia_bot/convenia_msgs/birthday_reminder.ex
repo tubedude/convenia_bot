@@ -21,7 +21,7 @@ defmodule CB.ConveniaBot.ConveniaMsgs.BirthdayReminder do
     names =
       data["employees"]
       |> Enum.map(&Helper.proper_name/1)
-      |> Enum.map(fn(e) -> "`#{e}`" end)
+      |> Enum.map(fn e -> "`#{e}`" end)
       |> Enum.join(", ")
 
     verb =
