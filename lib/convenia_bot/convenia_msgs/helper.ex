@@ -16,13 +16,14 @@ defmodule CB.ConveniaMsgs.Helper do
 
   def format_address(address) do
     "#{address["address"]}, #{address["number"]} #{address["complement"]}
- - #{address["zipcode"]} - #{address["city"]}, #{address["state"]}"
+ #{format_zipcode(address["zip_code"])} - #{address["city"]}, #{address["state"]}"
   end
 
-  def format_phone(nil), do: ""
-  def format_phone(phone_string), do: format_phone(phone_string, "(##) #####-####")
+  def format_phone(phone_string), do: format_number(phone_string, "(##) #####-####")
+  def format_zipcode(zipcode_string), do: format_number(zipcode_string, "#####-###")
 
-  def format_phone(phone_string, pattern) do
+  def format_number(nil), do: ""
+  def format_number(phone_string, pattern) do
     case String.match?(pattern, ~r/\#/) do
       false ->
         pattern
@@ -30,7 +31,7 @@ defmodule CB.ConveniaMsgs.Helper do
       true ->
         [d | r] = String.to_charlist(phone_string)
         p = String.replace(pattern, "#", to_string([d]), global: false)
-        format_phone(to_string(r), p)
+        format_number(to_string(r), p)
     end
   end
 
