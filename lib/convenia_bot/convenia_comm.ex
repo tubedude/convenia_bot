@@ -6,8 +6,6 @@ defmodule CB.ConveniaComm do
 
   def fetch_employee_info(id), do: fetch_employee_info(id, [], 0)
   def fetch_employee_info(id, opts), do: fetch_employee_info(id, opts, 0)
-  # def fetch_employee_info({id, _e}, opts, retries), do: fetch_employee_info(id, opts, retries)
-
   def fetch_employee_info(id, opts, retries) when is_binary(id) do
     url = @convenia_base_url <> "employees/" <> id
     Logger.debug("Fetching for: #{url}")
@@ -68,9 +66,9 @@ defmodule CB.ConveniaComm do
         :timer.sleep(60000)
         fetch_employees()
 
-      {:error, %HTTPoison.Error{reason: reason} = resp} ->
-        Logger.warn(reason)
-        {:error, resp}
+      {:error, %HTTPoison.Error{reason: _reason} = error} = resp->
+        Logger.warn(error)
+        resp
     end
   end
 

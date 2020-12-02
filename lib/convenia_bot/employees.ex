@@ -58,9 +58,11 @@ defmodule CB.Employees do
 
     case Enum.filter(state, &birthday?/1) do
       [] ->
+        Logger.info("No cake today.")
         {:reply, [], state}
 
       nivers ->
+        Logger.info("There is #{Enum.count(nivers)} birthday today.")
         data = %{"employees" => just(nivers), "type" => "birthday.reminder"}
         {:reply, CB.ExternalComm.post(data), state}
     end
