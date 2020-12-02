@@ -11,7 +11,8 @@ defmodule CBWeb.ApiController do
 
   def force_admissions_check(conn, _params) do
     Logger.info("Forcing addmissions check")
-    json(conn, CB.Employees.check_admissions())
+    {status, _} = CB.Employees.check_admissions()
+    json(conn, %{data: status} )
   end
 
   def incoming(conn, params) do
