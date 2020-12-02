@@ -9,14 +9,14 @@ defmodule CB.ExternalComm do
 
     case HTTPoison.post(channel, Jason.encode!(payload)) do
       {:ok, %{status_code: 200}} ->
-        %{ok: %{slack_status_code: 200, payload: payload}}
+        {:ok,  %{slack_status_code: 200, payload: payload}}
 
       {:ok, %{status_code: status_code}} ->
-        %{error: %{slack_status_code: status_code, payload: payload}}
+        {:error, %{slack_status_code: status_code, payload: payload}}
 
       {:error, resp} ->
         Logger.debug(inspect(resp))
-        %{error: %{reason: resp.reason, text: "Slack API returned with error."}}
+        {:error, %{reason: resp.reason, text: "Slack API returned with error."}}
     end
   end
 end

@@ -74,7 +74,7 @@ defmodule CB.Employees do
     case Enum.filter(state, &admission_is_near?/1) do
       [] ->
         Logger.info("No new admission found.")
-        {:reply, [], state}
+        {:reply, {:noop, :noop}, state}
 
       employees ->
         Logger.info("Next admissions found: #{Enum.count(employees)}")
