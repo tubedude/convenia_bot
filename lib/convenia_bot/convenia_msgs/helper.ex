@@ -20,9 +20,10 @@ defmodule CB.ConveniaMsgs.Helper do
   end
 
   def format_phone(phone_string), do: format_number(phone_string, "(##) #####-####")
+  def format_zipcode(""), do: ""
   def format_zipcode(zipcode_string), do: format_number(zipcode_string, "#####-###")
 
-  def format_number(nil), do: ""
+  def format_number(nil, _), do: ""
   def format_number(phone_string, pattern) do
     case String.match?(pattern, ~r/\#/) do
       false ->
