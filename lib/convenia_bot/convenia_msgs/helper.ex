@@ -25,14 +25,18 @@ defmodule CB.ConveniaMsgs.Helper do
 
   def format_number(nil, _), do: ""
   def format_number(phone_string, pattern) do
-    case String.match?(pattern, ~r/\#/) do
-      false ->
-        pattern
+    case String.first(phone_string) do
+      "(" -> phone_string
+      _ ->
+        case String.match?(pattern, ~r/\#/) do
+          false ->
+            pattern
 
-      true ->
-        [d | r] = String.to_charlist(phone_string)
-        p = String.replace(pattern, "#", to_string([d]), global: false)
-        format_number(to_string(r), p)
+          true ->
+            [d | r] = String.to_charlist(phone_string)
+            p = String.replace(pattern, "#", to_string([d]), global: false)
+            format_number(to_string(r), p)
+        end
     end
   end
 
