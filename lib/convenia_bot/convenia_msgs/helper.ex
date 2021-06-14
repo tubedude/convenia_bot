@@ -49,7 +49,7 @@ defmodule CB.ConveniaMsgs.Helper do
   end
 
   def supervisor(info) do
-    case info["supervisor"]["nome"] do
+    case info["supervisor"]["name"] do
       nil -> "sem supervisor definido"
       gestor -> "na equipe gerida por #{gestor} #{info["supervisor"]["last_name"]}"
     end
