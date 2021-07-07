@@ -50,6 +50,10 @@ defmodule CB.ConveniaMsgs.BirthdayReminder do
       ]
     }
 
-    {msg, Helper.slack_url()}
+    {msg, comms_slack_url()}
   end
+
+  defp comms_slack_url(),
+  do: Application.fetch_env!(:convenia_bot, :comms_slack_url)
+
 end

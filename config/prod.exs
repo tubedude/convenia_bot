@@ -89,6 +89,13 @@ config :convenia_bot,
          """)
 
 config :convenia_bot,
+      :comms_slack_url,
+      System.get_env("COMMS_SLACK_URL") ||
+        raise("""
+        environment variable COMMS_SLACK_URL is missing.
+        """)
+
+config :convenia_bot,
        :convenia_token,
        System.get_env("CONVENIA_TOKEN") ||
          raise("""
