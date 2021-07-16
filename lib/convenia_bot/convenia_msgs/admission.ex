@@ -14,6 +14,7 @@ defmodule CB.ConveniaMsgs.Admission do
     data
     |> sort()
     |> Helper.standard_enrich()
+    |> generate_pulse()
     |> format()
   end
 
@@ -79,4 +80,15 @@ defmodule CB.ConveniaMsgs.Admission do
 
     {msg, Helper.slack_url()}
   end
+
+  defp generate_pulse(data) do
+    pulse_data = %{"type" => "admission.pulses",
+    "status_name" => "GeneratePulse",
+    "employee" => data["employee"]
+    }
+
+    CB.ConveniaMsgs.parse(pulse_data)
+    data
+  end
+
 end
