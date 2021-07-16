@@ -1,5 +1,5 @@
 # Convenia Bot
-This bot receives webhooks from [Covenia](https://www.convenia.com.br) and post them to Slack.
+This bot receives webhooks from [Convenia](https://www.convenia.com.br) and post them to Slack.
 It also uses Quantum to perform periodic checks on Convenia's employee base and post them to Slack
 
 ## How it works
