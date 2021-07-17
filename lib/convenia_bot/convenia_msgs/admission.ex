@@ -81,13 +81,15 @@ defmodule CB.ConveniaMsgs.Admission do
     {msg, Helper.slack_url()}
   end
 
-  defp generate_pulse(data) do
-    pulse_data = %{"type" => "admission.pulses",
-    "status_name" => "GeneratePulse",
-    "employee" => data["employee"]
+  defp generate_pulse({_id, _body, employee} = data) do
+    pulse_data = %{
+      "type" => "admission.pulses",
+      "status_name" => "GeneratePulse",
+      "employee" => employee
     }
+# CB.ExternalComm.post(data)
+    Task.start_link(CB.ExternalComm, :post, [pulse_data] )
 
-    CB.ConveniaMsgs.parse(pulse_data)
     data
   end
 
