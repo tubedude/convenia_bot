@@ -41,6 +41,7 @@ defmodule CB.ConveniaMsgs.Helper do
   end
 
   def slack_url(), do: Application.fetch_env!(:convenia_bot, :slack_url)
+  def pulses_token(), do: Application.fetch_env!(:convenia_bot, :pulses_token)
 
   def standard_enrich({type, %{employee: employee} = data}) do
     Logger.debug(inspect(data))

@@ -32,7 +32,7 @@ defmodule CB.ConveniaMsgs.StartReminder do
         ] ++ sorted_employees(data["employees"])
     }
 
-    {msg, infra_interna_slack_url()}
+    {msg, infra_interna_slack_url(), []}
   end
 
   defp sorted_employees(employees) do
