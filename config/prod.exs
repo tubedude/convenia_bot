@@ -115,3 +115,10 @@ config :convenia_bot,
          raise("""
          environment variable SECRET_PASS is missing.
          """)
+
+config :convenia_bot,
+       :pulses_token,
+       System.get_env("PULSES_TOKEN") ||
+         raise("""
+         environment variable PULSES_TOKEN is missing.
+         """)

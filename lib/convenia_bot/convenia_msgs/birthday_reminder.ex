@@ -50,7 +50,7 @@ defmodule CB.ConveniaMsgs.BirthdayReminder do
       ]
     }
 
-    {msg, comms_slack_url()}
+    {msg, comms_slack_url(), []}
   end
 
   defp comms_slack_url(),

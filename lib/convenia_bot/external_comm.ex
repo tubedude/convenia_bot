@@ -5,18 +5,18 @@ defmodule CB.ExternalComm do
 
   def post(data) do
     Logger.info("Posting to Slack...")
-    {payload, channel} = CB.process(data)
+    {payload, url, header} = CB.process(data)
 
-    case HTTPoison.post(channel, Jason.encode!(payload)) do
+    case HTTPoison.post(url, Jason.encode!(payload), header) do
       {:ok, %{status_code: 200}} ->
-        {:ok,  %{slack_status_code: 200, payload: payload}}
+        {:ok,  %{status_code: 200, payload: payload}}
 
       {:ok, %{status_code: status_code}} ->
-        {:error, %{slack_status_code: status_code, payload: payload}}
+        {:error, %{status_code: status_code, payload: payload}}
 
       {:error, resp} ->
         Logger.debug(inspect(resp))
-        {:error, %{reason: resp.reason, text: "Slack API returned with error."}}
+        {:error, %{reason: resp.reason, text: "API returned with error."}}
     end
   end
 end

@@ -37,8 +37,8 @@ defmodule CB.ConveniaMsgs.AdmissionPulses do
       cpf: employee["document"]["cpf"],
       internal_number: employee["id"],
       celphone: employee["cellphone"],
-      groups: "1;2;3", # Name or id_group of groups of employee separated by semicolon
-      leaders: pulses_supervisor(employee),
+      groups: "87793", # Name or id_group of groups of employee separated by semicolon; NOVO ADMITIDO
+      # leaders: pulses_supervisor(employee),
       language: "pt-BR",
       blocked: 0,
       sex: employee["gender"],
@@ -49,15 +49,15 @@ defmodule CB.ConveniaMsgs.AdmissionPulses do
 
     {
       msg,
-      #add pulses API URL
-      # https://www.pulses.com.br/api/engage/v1/employees/
-      Helper.slack_url()
+      "https://www.pulses.com.br/api/engage/v1/employees/",
+      ["Authorization: Bearer #{Helpers.pulses_token()}"]
     }
   end
 
-  defp pulses_supervisor(employee) do
-    #Name, CPF, internal_number of leaders of employee separated by semicolon
-    supervisor = CB.Employees.find(employee["supervisor"]["id"])
-    "#{Helper.proper_name(supervisor)}, #{supervisor["cpf"]}, #{supervisor["id"]}"
-  end
+  # TODO Needs to check if Convenia ID matches Pulses ID.
+  # defp pulses_supervisor(employee) do
+  #   #Name, CPF, internal_number of leaders of employee separated by semicolon
+  #   supervisor = CB.Employees.find(employee["supervisor"]["id"])
+  #   "#{Helper.proper_name(supervisor)}, #{supervisor["cpf"]}, #{supervisor["id"]}"
+  # end
 end

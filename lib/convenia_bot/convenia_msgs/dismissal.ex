@@ -69,6 +69,6 @@ defmodule CB.ConveniaMsgs.Dismissal do
       ]
     }
 
-    {msg, Helper.slack_url()}
+    {msg, Helper.slack_url(),[]}
   end
 end
