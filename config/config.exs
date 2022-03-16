@@ -17,7 +17,7 @@ config :convenia_bot, CBWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "8ItqXnILpFKyXTjFVRYEz2IW3l7jBQVFN1/7aqEL737wNjp+4LCbfWzhJyKAtbLA",
   render_errors: [view: CBWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: CB.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub: [name: CB.PubSub],
   live_view: [signing_salt: "rS3ZGfZ+"]
 
 # Configures Elixir's Logger
@@ -27,6 +27,8 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :phoenix, :filter_parameters, ["secret_user", "secret_pass"]
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
