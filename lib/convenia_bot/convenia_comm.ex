@@ -16,8 +16,7 @@ defmodule CB.ConveniaComm do
 
         case Jason.decode(body) do
           {:ok, json} ->
-            [data | _t] = json["data"]
-            {:ok, data}
+            {:ok, json["data"]}
 
           {:error, e} ->
             # "Error decoding Response"
